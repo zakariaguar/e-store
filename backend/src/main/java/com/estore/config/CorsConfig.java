@@ -1,4 +1,4 @@
-package com.estore.backend.config;
+package com.estore.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
