@@ -1,0 +1,133 @@
+/* ProductDetail.css */
+
+.product-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.product-detail-back-link {
+  display: inline-block;
+  margin-bottom: 2rem;
+  color: #666;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.product-detail-back-link:hover {
+  color: #e74c3c;
+}
+
+.product-detail-content {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.product-detail-image {
+  flex: 1;
+  min-width: 300px;
+}
+
+.product-detail-image img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.product-detail-info {
+  flex: 1;
+  min-width: 300px;
+}
+
+.product-detail-title {
+  font-size: 2rem;
+  color: #1a1a2e;
+  margin-bottom: 1rem;
+}
+
+.product-detail-description {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.product-detail-price {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #e74c3c;
+  margin-bottom: 1.5rem;
+}
+
+.product-detail-quantity {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.product-detail-quantity label {
+  font-weight: 600;
+  color: #333;
+}
+
+.product-detail-quantity input {
+  width: 80px;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.product-detail-add-btn {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: background-color 0.3s, opacity 0.3s;
+  width: 100%;
+  max-width: 300px;
+}
+
+.product-detail-add-btn:hover {
+  background-color: #c0392b;
+}
+
+.product-detail-add-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.product-detail-loading,
+.product-detail-error {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.2rem;
+}
+
+.product-detail-error {
+  color: red;
+}
+
+@media (max-width: 768px) {
+  .product-detail-container {
+    padding: 1rem;
+  }
+  
+  .product-detail-content {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .product-detail-title {
+    font-size: 1.5rem;
+  }
+  
+  .product-detail-price {
+    font-size: 1.5rem;
+  }
+}

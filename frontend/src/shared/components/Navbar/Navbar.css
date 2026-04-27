@@ -1,0 +1,467 @@
+/* ===========================
+   NAVBAR
+   =========================== */
+
+.navbar {
+  background-color: #1a1a2e;
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Logo GAUCHE — menu DROITE
+   PAS de max-width ni margin auto → s'étend sur 100% */
+.navbar__container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ===========================
+   LOGO
+   =========================== */
+
+.navbar__brand {
+  flex-shrink: 0;
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column; 
+}
+
+.navbar__logo {
+  text-decoration: none;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  display: inline-block;
+  transition: opacity 0.3s ease;
+  margin-bottom: 2px;
+}
+
+.navbar__logo:hover { opacity: 0.7; }
+
+.navbar__tagline {
+  font-size: 0.7rem;
+  color: #aaa;
+  letter-spacing: 1px;
+  margin-top: 0;
+}
+
+/* ===========================
+   MENU DESKTOP
+   =========================== */
+
+.navbar__desktop-menu {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.navbar__link {
+  text-decoration: none;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  display: inline-block;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+}
+
+.navbar__link:hover { opacity: 0.7; }
+
+.navbar__link--dropdown { cursor: pointer; }
+
+/* ===========================
+   DROPDOWN CATÉGORIES
+   =========================== */
+
+.navbar__dropdown {
+  position: relative;
+}
+
+.navbar__dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  min-width: 200px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  z-index: 1000;
+  padding: 0.5rem 0;
+  animation: fadeDown 0.15s ease;
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.navbar__dropdown-item {
+  display: block;
+  padding: 10px 24px;
+  color: #333;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.navbar__dropdown-item:hover {
+  background-color: #f5f5f5;
+  color: #e74c3c;
+}
+
+/* ===========================
+   BOUTONS
+   =========================== */
+
+.navbar__btn-login {
+  text-decoration: none;
+  color: #fff;
+  background-color: #e74c3c;
+  padding: 0.5rem 1.5rem;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  display: inline-block;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.3s ease, background-color 0.3s ease;
+  white-space: nowrap;
+  margin-right: 20px;  /* ← NOUVEAU : marge à droite */
+}
+
+.navbar__btn-login:hover {
+  opacity: 0.85;
+  background-color: #c0392b;
+}
+
+.navbar__btn-account {
+  background: none;
+  border: 1px solid #fff;
+  padding: 0.5rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #fff;
+  transition: opacity 0.3s ease;
+}
+
+.navbar__btn-account:hover { opacity: 0.7; }
+
+/* ===========================
+   ICÔNE LOUPE
+   =========================== */
+
+.navbar__search-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.3s ease;
+}
+
+.navbar__search-btn:hover { opacity: 0.7; }
+
+.navbar__search-icon {
+  width: 22px;
+  height: 22px;
+  stroke: #fff;
+}
+
+/* ===========================
+   BARRE DE RECHERCHE DESKTOP
+   Centrée sous la navbar
+   =========================== */
+
+.navbar__search-bar {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #333;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;      /* ← centre le champ */
+  position: relative;
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.navbar__search-wrapper {
+  width: 55%;               /* ← large, centré grâce à align-items: center du parent */
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 40px;
+  padding: 0 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.navbar__search-bar-icon {
+  width: 20px;
+  height: 20px;
+  color: #999;
+  flex-shrink: 0;
+}
+
+.navbar__search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0.8rem 0.5rem;
+  font-size: 0.9rem;
+  background: transparent;
+  color: #333;
+}
+
+.navbar__search-input::placeholder { color: #bbb; }
+
+.navbar__search-clear {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #999;
+  font-size: 1rem;
+  padding: 0 0.5rem;
+  transition: color 0.2s;
+}
+
+.navbar__search-clear:hover { color: #e74c3c; }
+
+/* Résultats desktop — centré via position absolute + translateX */
+.navbar__search-results {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 55%;
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  margin-top: 8px;
+  z-index: 1001;
+}
+
+.navbar__search-empty {
+  padding: 1rem;
+  text-align: center;
+  color: #999;
+}
+
+.navbar__search-result-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.navbar__search-result-item:last-child { border-bottom: none; }
+
+.navbar__search-result-item:hover { background-color: #f5f5f5; }
+
+.navbar__result-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.navbar__result-info { flex: 1; min-width: 0; }
+
+.navbar__result-name {
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.navbar__result-desc {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 2px;
+}
+
+.navbar__result-price {
+  font-weight: bold;
+  color: #e74c3c;
+  margin-top: 4px;
+}
+
+/* ===========================
+   HAMBURGER
+   =========================== */
+
+.navbar__hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #fff;
+  transition: opacity 0.2s ease;
+  padding: 0;
+}
+
+.navbar__hamburger:hover { opacity: 0.7; }
+
+/* ===========================
+   MENU MOBILE
+   =========================== */
+
+.navbar__mobile-menu {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: slideDown 0.2s ease;
+  width: 100%;
+}
+
+/* Recherche mobile — full width, pill */
+.navbar__mobile-search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #fff;
+  border-radius: 40px;
+  padding: 0.2rem 1rem;
+  width: calc(100% - 20px);   /* ← Largeur avec marge de 10px de chaque côté */
+  margin-left: 10px;           /* ← Marge gauche */
+  margin-right: 10px;          /* ← Marge droite */
+  box-sizing: border-box;
+}
+
+.navbar__mobile-search .navbar__search-bar-icon {
+  color: #999;
+  flex-shrink: 0;
+}
+
+.navbar__mobile-search .navbar__search-input {
+  width: 100%;
+  padding: 0.65rem 0.3rem;
+}
+
+/* Résultats mobile */
+.navbar__mobile-results {
+  max-height: 280px;
+  overflow-y: auto;
+  background-color: #fff;
+  border-radius: 12px;
+  width: calc(100% - 20px);   /* ← Mêmes marges (10px de chaque côté) */
+  margin-left: 10px;           /* ← Marge gauche */
+  margin-right: 10px;          /* ← Marge droite */
+  box-sizing: border-box;
+}
+.navbar__mobile-result-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.8rem;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+.navbar__mobile-result-item:hover { background-color: #fafafa; }
+
+.navbar__mobile-result-img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+
+.navbar__search-empty--mobile {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 0.8rem;
+  text-align: center;
+  color: #aaa;
+  font-size: 0.85rem;
+  width: calc(100% - 20px);   /* ← Mêmes marges */
+  margin-left: 10px;
+  margin-right: 10px;
+  box-sizing: border-box;
+}
+/* Liens mobiles — margin gauche */
+.navbar__mobile-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 1rem;
+  gap: 0;
+}
+
+.navbar__mobile-links .navbar__link {
+  padding: 0.6rem 0;
+  font-size: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  width: 100%;
+}
+
+/* Connexion mobile — centré */
+.navbar__btn-login--mobile {
+  display: block;
+  width: 90%;                /* ← Plus large (90% de la largeur) */
+  max-width: 300px;          /* ← Largeur max pour ne pas déborder */
+  margin: 0.5rem auto 0;     /* ← Centré automatiquement */
+  text-align: center;
+  padding: 0.8rem 1.5rem;    /* ← Plus de padding pour un bouton plus grand */
+  font-size: 1rem;           /* ← Texte légèrement plus grand */
+  background-color: #e74c3c;
+  color: #fff;
+  border-radius: 40px;       /* ← Coins arrondis */
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.navbar__btn-login--mobile:hover {
+  opacity: 0.85;
+}
+/* ===========================
+   RESPONSIVE
+   =========================== */
+
+@media (max-width: 768px) {
+  .navbar__desktop-menu {
+    display: none !important;
+  }
+
+  .navbar__hamburger {
+    display: block !important;
+  }
+
+  .navbar {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .navbar__mobile-menu {
+    display: none !important;
+  }
+}

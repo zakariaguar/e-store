@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './shared/components/Navbar/Navbar';
 import Footer from './shared/components/Footer/Footer';
 import ProductList from './features/catalog/pages/ProductList';
+import ProductDetail from './features/catalog/pages/ProductDetail';
 import './App.css';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <main style={{ flex: 1, padding: '2rem' }}>
           <Routes>
             <Route path="/" element={<ProductList />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
           </Routes>
         </main>
         <Footer />
