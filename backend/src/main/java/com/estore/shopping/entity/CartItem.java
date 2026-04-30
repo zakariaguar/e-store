@@ -20,7 +20,7 @@ public class CartItem {
 
     @ManyToOne
     @JoinColumn(name = "cart_id", nullable = false)
-    @JsonIgnore  // ← Ajoute cette annotation
+    @JsonIgnore
     private Cart cart;
 
     @Column(name = "product_id", nullable = false)
@@ -31,4 +31,7 @@ public class CartItem {
     private Integer quantity;
 
     private BigDecimal price;
+
+    @Column(name = "image_url")
+    private String imageUrl;
 }

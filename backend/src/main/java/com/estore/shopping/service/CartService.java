@@ -52,6 +52,7 @@ public class CartService {
                     .productName(product.getName())
                     .quantity(quantity)
                     .price(product.getPrice())
+                    .imageUrl(product.getImageUrl())
                     .build();
             cart.getItems().add(newItem);
             cartItemRepository.save(newItem);

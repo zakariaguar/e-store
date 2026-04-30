@@ -55,9 +55,9 @@ public class OrderService {
                     .productName(cartItem.getProductName())
                     .quantity(cartItem.getQuantity())
                     .price(cartItem.getPrice())
+                    .imageUrl(cartItem.getImageUrl())  // ← Ajout de l'image
                     .build();
             orderItemRepository.save(orderItem);
-            savedOrder.getItems().add(orderItem);
         }
 
         // Vider le panier
@@ -67,7 +67,7 @@ public class OrderService {
     }
 
     public List<Order> getUserOrders(Long userId) {
-        return orderRepository.findByUserId(userId);
+        return orderRepository.findByUserIdWithItems(userId);
     }
 
     private BigDecimal calculateTotal(Cart cart) {

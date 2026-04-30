@@ -1,0 +1,397 @@
+/* Orders.css */
+
+.orders-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.orders-title {
+  font-size: 2rem;
+  color: #1a1a2e;
+  margin-bottom: 0.5rem;
+}
+
+.orders-subtitle {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+/* Loading / Error / Empty */
+.orders-loading, .orders-error, .orders-empty {
+  text-align: center;
+  padding: 3rem;
+}
+
+.orders-empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.orders-empty h2 {
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.orders-empty p {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.orders-empty-btn {
+  display: inline-block;
+  background-color: #e74c3c;
+  color: #fff;
+  padding: 0.8rem 2rem;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.orders-empty-btn:hover {
+  background-color: #c0392b;
+}
+
+.orders-retry-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+/* Liste des commandes */
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Carte commande */
+.orders-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.orders-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #eee;
+}
+
+.orders-card-number {
+  font-weight: 600;
+  color: #333;
+  display: block;
+}
+
+.orders-card-date {
+  font-size: 0.8rem;
+  color: #888;
+  margin-left: 1rem;
+}
+
+.orders-card-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-confirmed {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-shipped {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.status-delivered {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.status-cancelled {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Items de la commande */
+.orders-card-items {
+  padding: 0 1rem;
+}
+
+.orders-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.orders-item:last-child {
+  border-bottom: none;
+}
+
+.orders-item-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.orders-item-info {
+  flex: 1;
+}
+
+.orders-item-name {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.orders-item-name:hover {
+  color: #e74c3c;
+}
+
+.orders-item-meta {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.orders-item-total {
+  font-weight: 600;
+  color: #e74c3c;
+}
+
+/* Footer de la carte */
+.orders-card-footer {
+  padding: 1rem 1.5rem;
+  background-color: #f8f9fa;
+  border-top: 1px solid #eee;
+  text-align: right;
+}
+
+.orders-card-total {
+  font-size: 1.1rem;
+}
+
+.orders-card-total span {
+  color: #666;
+  margin-right: 1rem;
+}
+
+.orders-card-total strong {
+  color: #e74c3c;
+  font-size: 1.3rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .orders-container {
+    padding: 1rem;
+  }
+  
+  .orders-title {
+    font-size: 1.5rem;
+  }
+  
+  .orders-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .orders-card-number {
+    font-size: 0.9rem;
+  }
+  
+  .orders-card-date {
+    margin-left: 0;
+    font-size: 0.7rem;
+  }
+  
+  .orders-item {
+    flex-wrap: wrap;
+  }
+  
+  .orders-item-total {
+    margin-left: 70px;
+  }
+}
+
+/* ===========================
+   STYLES AMÉLIORÉS POUR LES COMMANDES
+   =========================== */
+
+/* Carte commande avec animation */
+.orders-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-bottom: 1.5rem;
+}
+
+.orders-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* En-tête avec badge */
+.orders-card-header {
+  background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+  border-bottom: 1px solid #eee;
+}
+
+.orders-card-number {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #1a1a2e;
+  background: #eef2ff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+.orders-card-status {
+  padding: 0.3rem 1rem;
+  border-radius: 30px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Badges améliorés */
+.status-pending {
+  background: #fff3cd;
+  color: #856404;
+  border-left: 3px solid #ffc107;
+}
+
+.status-confirmed {
+  background: #d4edda;
+  color: #155724;
+  border-left: 3px solid #28a745;
+}
+
+.status-shipped {
+  background: #cce5ff;
+  color: #004085;
+  border-left: 3px solid #007bff;
+}
+
+.status-delivered {
+  background: #d1ecf1;
+  color: #0c5460;
+  border-left: 3px solid #17a2b8;
+}
+
+.status-cancelled {
+  background: #f8d7da;
+  color: #721c24;
+  border-left: 3px solid #dc3545;
+}
+
+/* Items améliorés */
+.orders-item {
+  transition: background 0.2s;
+}
+
+.orders-item:hover {
+  background: #fafafa;
+}
+
+.orders-item-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.orders-item-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Footer amélioré */
+.orders-card-footer {
+  background: #f8f9fa;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.orders-card-total {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.orders-card-total span {
+  font-size: 0.9rem;
+}
+
+.orders-card-total strong {
+  font-size: 1.3rem;
+}
+
+/* Animation d'entrée */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.orders-card {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+/* Version mobile améliorée */
+@media (max-width: 768px) {
+  .orders-card-header {
+    padding: 1rem;
+  }
+  
+  .orders-card-number {
+    font-size: 0.85rem;
+  }
+  
+  .orders-card-date {
+    font-size: 0.7rem;
+  }
+  
+  .orders-item-img {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .orders-item-name {
+    font-size: 0.85rem;
+  }
+  
+  .orders-card-total strong {
+    font-size: 1.1rem;
+  }
+}

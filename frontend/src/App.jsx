@@ -6,6 +6,10 @@ import ProductDetail from './features/catalog/pages/ProductDetail';
 import Login from './features/auth/pages/Login';
 import CategoryProducts from './features/catalog/pages/CategoryProducts';
 import Cart from './features/cart/pages/Cart';
+import Orders from './features/orders/pages/Orders';
+
+
+
 import './App.css';
 
 function App() {
@@ -20,6 +24,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/category/:id" element={<CategoryProducts />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/orders" element={<Orders />} />
           </Routes>
         </main>
         <Footer />
