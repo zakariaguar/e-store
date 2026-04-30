@@ -11,6 +11,9 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
   const [addingToCart, setAddingToCart] = useState(false);
 
+  // Récupérer l'utilisateur connecté
+  const user = JSON.parse(localStorage.getItem('user') || 'null');
+
   useEffect(() => {
     fetchProduct();
   }, [id]);
@@ -29,32 +32,35 @@ const ProductDetail = () => {
   };
 
   const addToCart = async () => {
-    setAddingToCart(true);
-    try {
-      // Pour l'instant, on utilise userId = 1 (en attendant l'auth)
-      const userId = 1;
-      const response = await fetch(`http://localhost:8080/api/cart/add?userId=${userId}&productId=${product.id}&quantity=${quantity}`, {
-        method: 'POST',
-      });
-      if (response.ok) {
-        navigate('/cart');
-      } else {
-        alert('Erreur lors de l\'ajout au panier');
-      }
-    } catch (error) {
-      console.error('Erreur:', error);
-      alert('Erreur lors de l\'ajout au panier');
-    } finally {
-      setAddingToCart(false);
-    }
-  };
+  // Vérifier si l'utilisateur est connecté
+  if (!user) {
+    alert('Veuillez vous connecter pour ajouter au panier');
+    navigate('/login');
+    return;
+  }
 
+  setAddingToCart(true);
+  try {
+    const response = await fetch(`http://localhost:8080/api/cart/add?userId=${user.id}&productId=${product.id}&quantity=${quantity}`, {
+      method: 'POST',
+    });
+    
+    // Ne pas essayer de parser la réponse si ce n'est pas du JSON
+    if (response.ok) {
+      alert('✅ Produit ajouté au panier !');
+      navigate('/cart');
+    } else {
+      alert('Erreur lors de l\'ajout au panier');
+    }
+  } catch (error) {
+    console.error('Erreur:', error);
+    alert('Erreur lors de l\'ajout au panier');
+  } finally {
+    setAddingToCart(false);
+  }
+};
   if (loading) {
-    return (
-      <div className="product-detail-loading">
-        ⏳ Chargement du produit...
-      </div>
-    );
+    return <div className="product-detail-loading">⏳ Chargement du produit...</div>;
   }
 
   if (error || !product) {
@@ -72,16 +78,14 @@ const ProductDetail = () => {
       <Link to="/" className="product-detail-back-link">← Retour aux produits</Link>
 
       <div className="product-detail-content">
-        {/* Image */}
         <div className="product-detail-image">
           <img src={product.imageUrl || 'https://picsum.photos/id/0/400/400'} alt={product.name} />
         </div>
 
-        {/* Infos produit */}
         <div className="product-detail-info">
           <h1 className="product-detail-title">{product.name}</h1>
-          <p className="product-detail-description" dangerouslySetInnerHTML={{ __html: product.description }}></p>
-          <div className="product-detail-price">{product.price} €</div>
+          <div className="product-detail-description" dangerouslySetInnerHTML={{ __html: product.description }}></div>
+          <div className="product-detail-price">{product.price} DH</div>
           
           <div className="product-detail-quantity">
             <label>Quantité :</label>
