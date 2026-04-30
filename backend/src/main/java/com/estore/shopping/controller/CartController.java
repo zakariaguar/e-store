@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/cart")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:5173")
 @RequiredArgsConstructor
 public class CartController {
 
@@ -26,10 +26,16 @@ public class CartController {
         return ResponseEntity.ok(cartService.addToCart(userId, productId, quantity));
     }
 
-    @PutMapping("/item/{cartItemId}")
-    public ResponseEntity<Cart> updateCartItem(@PathVariable Long cartItemId,
+    @PutMapping("/update")
+    public ResponseEntity<Cart> updateCartItem(@RequestParam Long cartItemId,
                                                @RequestParam int quantity) {
         return ResponseEntity.ok(cartService.updateCartItem(cartItemId, quantity));
+    }
+
+    @DeleteMapping("/remove/{cartItemId}")
+    public ResponseEntity<Void> removeCartItem(@PathVariable Long cartItemId) {
+        cartService.removeCartItem(cartItemId);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{userId}")

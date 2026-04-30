@@ -8,6 +8,7 @@ import com.estore.customer.entity.Profile;
 import com.estore.customer.repository.UserRepository;
 import com.estore.customer.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
+    private final PasswordEncoder passwordEncoder;  // ← Spring injecte automatiquement
 
     @Transactional
     public UserResponse register(RegisterRequest request) {
@@ -28,7 +30,7 @@ public class UserService {
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
-                .password(request.getPassword())
+                .password(passwordEncoder.encode(request.getPassword()))  // ← Hachage
                 .build();
 
         User savedUser = userRepository.save(user);
@@ -51,7 +53,7 @@ public class UserService {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Email ou mot de passe incorrect"));
 
-        if (!user.getPassword().equals(request.getPassword())) {
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("Email ou mot de passe incorrect");
         }
 

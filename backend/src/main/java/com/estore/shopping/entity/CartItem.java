@@ -3,6 +3,7 @@ package com.estore.shopping.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "cart_items")
@@ -19,6 +20,7 @@ public class CartItem {
 
     @ManyToOne
     @JoinColumn(name = "cart_id", nullable = false)
+    @JsonIgnore  // ← Ajoute cette annotation
     private Cart cart;
 
     @Column(name = "product_id", nullable = false)

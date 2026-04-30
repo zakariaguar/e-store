@@ -9,7 +9,7 @@ import com.estore.catalog.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.math.BigDecimal;
+import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +22,9 @@ public class CartService {
     public Cart getCartByUserId(Long userId) {
         return cartRepository.findByUserId(userId)
                 .orElseGet(() -> {
-                    Cart newCart = Cart.builder().userId(userId).build();
+                    Cart newCart = new Cart();
+                    newCart.setUserId(userId);
+                    newCart.setItems(new ArrayList<>());
                     return cartRepository.save(newCart);
                 });
     }
@@ -33,6 +35,7 @@ public class CartService {
                 .orElseThrow(() -> new RuntimeException("Produit non trouvé"));
 
         Cart cart = getCartByUserId(userId);
+        cart = cartRepository.save(cart);
 
         CartItem existingItem = cart.getItems().stream()
                 .filter(item -> item.getProductId().equals(productId))
@@ -64,12 +67,19 @@ public class CartService {
 
         if (quantity <= 0) {
             cartItemRepository.delete(item);
+            Cart cart = cartRepository.findById(item.getCart().getId()).orElseThrow();
+            cart.getItems().remove(item);
+            return cart;
         } else {
             item.setQuantity(quantity);
             cartItemRepository.save(item);
+            return cartRepository.findById(item.getCart().getId()).orElseThrow();
         }
+    }
 
-        return cartRepository.findById(item.getCart().getId()).orElseThrow();
+    @Transactional
+    public void removeCartItem(Long cartItemId) {
+        cartItemRepository.deleteById(cartItemId);
     }
 
     @Transactional
