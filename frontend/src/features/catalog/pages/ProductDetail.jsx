@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import './ProductDetail.css';
+import ReviewList from '../../reviews/components/ReviewList';
+import ReviewForm from '../../reviews/components/ReviewForm';
+
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -105,6 +108,14 @@ const ProductDetail = () => {
           >
             {addingToCart ? 'Ajout en cours...' : '🛒 Ajouter au panier'}
           </button>
+
+          <div className="product-detail-reviews">
+  <ReviewList productId={id} />
+  <ReviewForm productId={id} onReviewAdded={() => window.location.reload()} />
+</div>
+          
+
+          
         </div>
       </div>
     </div>

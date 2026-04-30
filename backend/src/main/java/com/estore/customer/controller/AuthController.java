@@ -25,7 +25,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new UserResponse(null, null, null, null, e.getMessage()));
+                    .body(new UserResponse(null, null, null, null, null, e.getMessage()));
         }
     }
 
@@ -36,8 +36,7 @@ public class AuthController {
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new UserResponse(null, null, null, null, e.getMessage()));
+                    .body(new UserResponse(null, null, null, null, null, e.getMessage()));
         }
     }
-
 }

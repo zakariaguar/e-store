@@ -7,6 +7,7 @@ import Login from './features/auth/pages/Login';
 import CategoryProducts from './features/catalog/pages/CategoryProducts';
 import Cart from './features/cart/pages/Cart';
 import Orders from './features/orders/pages/Orders';
+import AdminProducts from './features/admin/pages/AdminProducts';
 
 
 
@@ -25,6 +26,7 @@ function App() {
             <Route path="/category/:id" element={<CategoryProducts />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/admin" element={<AdminProducts />} />
           </Routes>
         </main>
         <Footer />

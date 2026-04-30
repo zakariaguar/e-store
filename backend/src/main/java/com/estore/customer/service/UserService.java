@@ -18,7 +18,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
-    private final PasswordEncoder passwordEncoder;  // ← Spring injecte automatiquement
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public UserResponse register(RegisterRequest request) {
@@ -30,7 +30,8 @@ public class UserService {
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))  // ← Hachage
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role("USER")  // ← AJOUTE CETTE LIGNE
                 .build();
 
         User savedUser = userRepository.save(user);
@@ -45,6 +46,7 @@ public class UserService {
                 savedUser.getFirstName(),
                 savedUser.getLastName(),
                 savedUser.getEmail(),
+                savedUser.getRole(),  // ← AJOUTE CETTE LIGNE
                 "Inscription réussie"
         );
     }
@@ -57,11 +59,14 @@ public class UserService {
             throw new RuntimeException("Email ou mot de passe incorrect");
         }
 
+        System.out.println("Rôle de l'utilisateur: " + user.getRole());  // ← Ajoute ce log
+
         return new UserResponse(
                 user.getId(),
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
+                user.getRole(),  // ← Vérifie que cette ligne existe
                 "Connexion réussie"
         );
     }
