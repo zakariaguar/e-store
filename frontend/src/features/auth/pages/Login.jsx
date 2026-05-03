@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 const Login = () => {
-  const [activeTab, setActiveTab] = useState('login'); // 'login' ou 'register'
+  const [activeTab, setActiveTab] = useState('login');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -20,95 +20,97 @@ const Login = () => {
   const [regConfirmPassword, setRegConfirmPassword] = useState('');
 
   const handleLogin = async (e) => {
-  e.preventDefault();
-  setError('');
-  setLoading(true);
+    e.preventDefault();
+    setError('');
+    setLoading(true);
 
-  try {
-    const response = await fetch('http://localhost:8080/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: loginEmail, password: loginPassword })
-    });
+    try {
+      const response = await fetch('http://localhost:8080/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: loginEmail, password: loginPassword })
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (response.ok) {
-      localStorage.setItem('user', JSON.stringify({
-        id: data.id,
-        email: data.email,
-        firstName: data.firstName,
-        lastName: data.lastName
-      }));
-      navigate('/');
-      window.location.reload(); // ← AJOUTE CETTE LIGNE
-    } else {
-      setError(data.message || 'Email ou mot de passe incorrect');
+      if (response.ok) {
+        // ✅ Stocker le rôle dans localStorage
+        localStorage.setItem('user', JSON.stringify({
+          id: data.id,
+          email: data.email,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          role: data.role || 'USER'
+        }));
+        navigate('/');
+        window.location.reload();
+      } else {
+        setError(data.message || 'Email ou mot de passe incorrect');
+      }
+    } catch (err) {
+      setError('Erreur de connexion au serveur');
+    } finally {
+      setLoading(false);
     }
-  } catch (err) {
-    setError('Erreur de connexion au serveur');
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   const handleRegister = async (e) => {
-  e.preventDefault();
-  setError('');
+    e.preventDefault();
+    setError('');
 
-  // ✅ AJOUTE CETTE VALIDATION ICI (avant la vérification de correspondance)
-  if (regPassword.length < 6) {
-    setError('Le mot de passe doit contenir au moins 6 caractères');
-    return;
-  }
-
-  if (regPassword !== regConfirmPassword) {
-    setError('Les mots de passe ne correspondent pas');
-    return;
-  }
-
-  setLoading(true);
-
-  try {
-    const response = await fetch('http://localhost:8080/api/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        firstName: regFirstName,
-        lastName: regLastName,
-        email: regEmail,
-        password: regPassword
-      })
-    });
-
-    const data = await response.json();
-
-    if (response.ok) {
-      localStorage.setItem('user', JSON.stringify({
-        id: data.id,
-        email: data.email,
-        firstName: data.firstName,
-        lastName: data.lastName
-      }));
-      navigate('/');
-    } else {
-      setError(data.message || 'Erreur lors de l\'inscription');
+    if (regPassword.length < 6) {
+      setError('Le mot de passe doit contenir au moins 6 caractères');
+      return;
     }
-  } catch (err) {
-    setError('Erreur de connexion au serveur');
-  } finally {
-    setLoading(false);
-  }
-};
+
+    if (regPassword !== regConfirmPassword) {
+      setError('Les mots de passe ne correspondent pas');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch('http://localhost:8080/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: regFirstName,
+          lastName: regLastName,
+          email: regEmail,
+          password: regPassword
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // ✅ Stocker le rôle dans localStorage
+        localStorage.setItem('user', JSON.stringify({
+          id: data.id,
+          email: data.email,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          role: data.role || 'USER'
+        }));
+        navigate('/');
+        window.location.reload();
+      } else {
+        setError(data.message || 'Erreur lors de l\'inscription');
+      }
+    } catch (err) {
+      setError('Erreur de connexion au serveur');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    
     <div className="auth-container">
       <div className="auth-card">
         
         {/* Logo */}
         <div className="auth-logo">
-          
           <h1 className="auth-logo-text">ElectroWorld</h1>
           <p className="auth-logo-subtitle">votre univers tech</p>
         </div>
@@ -226,7 +228,6 @@ const Login = () => {
         </div>
       </div>
     </div>
-    
   );
 };
 
