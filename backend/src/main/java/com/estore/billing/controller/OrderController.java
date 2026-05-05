@@ -10,12 +10,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
-@CrossOrigin(origins = "http://localhost:5173")  // ← Corrige le port (5173 au lieu de 4200)
+@CrossOrigin(origins = "http://localhost:5173")
 @RequiredArgsConstructor
 public class OrderController {
 
     private final OrderService orderService;
-    private final OrderRepository orderRepository;  // ← Ajoute cette ligne
+    private final OrderRepository orderRepository;
 
     @PostMapping("/{userId}")
     public ResponseEntity<Order> createOrder(@PathVariable Long userId) {
@@ -27,7 +27,7 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getUserOrders(userId));
     }
 
-    @GetMapping("/admin/all")  // ← Endpoint pour admin (toutes les commandes)
+    @GetMapping("/admin/all")
     public ResponseEntity<List<Order>> getAllOrders() {
         return ResponseEntity.ok(orderRepository.findAll());
     }

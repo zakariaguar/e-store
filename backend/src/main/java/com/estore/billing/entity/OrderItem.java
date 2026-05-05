@@ -20,7 +20,7 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
-    @JsonIgnore  // ← Ajoute cette ligne
+    @JsonIgnore
     private Order order;
 
     @Column(name = "product_id", nullable = false)
