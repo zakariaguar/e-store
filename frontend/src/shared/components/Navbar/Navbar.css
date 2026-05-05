@@ -2,13 +2,32 @@
    NAVBAR
    =========================== */
 
+/* Styles pour la navbar sticky */
 .navbar {
   background-color: #1a1a2e;
   padding: 1rem 2rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  position: sticky;
+  position: relative;
   top: 0;
   z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.navbar.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 /* Logo GAUCHE — menu DROITE
@@ -465,3 +484,5 @@
     display: none !important;
   }
 }
+
+

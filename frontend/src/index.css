@@ -1,2 +1,16 @@
 /* Page Login - pas de padding */
 body:has(.auth-container) main { padding: 0 !important; margin: 0 !important; max-width: 100% !important; width: 100% !important; }
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow-y: auto;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}

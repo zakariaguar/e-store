@@ -1,10 +1,11 @@
 package com.estore.customer.entity;
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "users")
@@ -41,6 +42,7 @@ public class User {
     private String role = "USER";  // ← Ajoute cette ligne (USER ou ADMIN)
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference  // ← Indique que c'est le côté parent de la relation
     private Profile profile;
 
     @PrePersist

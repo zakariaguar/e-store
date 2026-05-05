@@ -5,14 +5,33 @@ import './Navbar.css';
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
+  const [userRole, setUserRole] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [showSearch, setShowSearch] = useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
   const searchRef = useRef(null);
   const searchInputRef = useRef(null);
+  const navbarRef = useRef(null);
   const navigate = useNavigate();
+
+  // Gestion du sticky au scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (navbarRef.current) {
+        if (window.scrollY > 100) {
+          setIsSticky(true);
+        } else {
+          setIsSticky(false);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Vérifier si l'utilisateur est connecté
   useEffect(() => {
@@ -21,6 +40,7 @@ const Navbar = () => {
       const userData = JSON.parse(user);
       setIsLoggedIn(true);
       setUserName(`${userData.firstName} ${userData.lastName}`);
+      setUserRole(userData.role || '');
     }
   }, []);
 
@@ -29,6 +49,7 @@ const Navbar = () => {
     localStorage.removeItem('user');
     setIsLoggedIn(false);
     setUserName('');
+    setUserRole('');
     navigate('/');
     window.location.reload();
   };
@@ -80,7 +101,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar">
+    <nav ref={navbarRef} className={`navbar ${isSticky ? 'sticky' : ''}`}>
       <div className="navbar__container">
         {/* Logo */}
         <div className="navbar__brand">
@@ -111,6 +132,11 @@ const Navbar = () => {
           <Link to="/cart" className="navbar__link">Panier</Link>
           <Link to="/orders" className="navbar__link">Commandes</Link>
 
+          {/* Administration - visible uniquement pour ADMIN */}
+          {isLoggedIn && userRole === 'ADMIN' && (
+            <Link to="/admin" className="navbar__link">Administration</Link>
+          )}
+
           {/* Loupe */}
           <button className="navbar__search-btn" onClick={handleSearchToggle}>
             <svg className="navbar__search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
@@ -119,12 +145,14 @@ const Navbar = () => {
             </svg>
           </button>
 
-          {/* Connexion / Déconnexion */}
+          {/* ✅ Connexion / Déconnexion - Clic sur le nom redirige vers /profile */}
           {!isLoggedIn ? (
             <Link to="/login" className="navbar__btn-login">Connexion</Link>
           ) : (
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <span style={{ color: '#fff' }}>👤 {userName}</span>
+              <Link to="/profile" style={{ color: '#fff', textDecoration: 'none' }}>
+                👤 {userName}
+              </Link>
               <button onClick={handleLogout} className="navbar__btn-login" style={{ backgroundColor: '#555', marginRight: '20px' }}>
                 Déconnexion
               </button>
@@ -223,11 +251,22 @@ const Navbar = () => {
             <Link to="/cart" className="navbar__link" onClick={() => setIsMenuOpen(false)}>Panier</Link>
             <Link to="/orders" className="navbar__link" onClick={() => setIsMenuOpen(false)}>Commandes</Link>
 
+            {/* Administration - visible uniquement pour ADMIN */}
+            {isLoggedIn && userRole === 'ADMIN' && (
+              <>
+                <Link to="/admin" className="navbar__link">Produits</Link>
+                <Link to="/admin/orders" className="navbar__link">Commandes</Link>
+              </>
+            )}
+
+            {/* ✅ Connexion / Déconnexion mobile */}
             {!isLoggedIn ? (
               <Link to="/login" className="navbar__btn-login navbar__btn-login--mobile" onClick={() => setIsMenuOpen(false)}>Connexion</Link>
             ) : (
               <>
-                <div style={{ padding: '0.5rem 0', color: '#fff' }}>👤 {userName}</div>
+                <Link to="/profile" style={{ padding: '0.5rem 0', color: '#fff', textDecoration: 'none' }} onClick={() => setIsMenuOpen(false)}>
+                  👤 {userName}
+                </Link>
                 <button onClick={handleLogout} className="navbar__btn-login navbar__btn-login--mobile" style={{ backgroundColor: '#555' }}>
                   Déconnexion
                 </button>

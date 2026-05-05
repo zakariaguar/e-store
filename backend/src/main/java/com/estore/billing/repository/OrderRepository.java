@@ -11,5 +11,6 @@ import org.springframework.data.repository.query.Param;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("SELECT o FROM Order o LEFT JOIN FETCH o.items WHERE o.userId = :userId")
     List<Order> findByUserIdWithItems(@Param("userId") Long userId);
+    List<Order> findAllByOrderByOrderDateDesc();
 
 }

@@ -4,7 +4,6 @@ import './ProductDetail.css';
 import ReviewList from '../../reviews/components/ReviewList';
 import ReviewForm from '../../reviews/components/ReviewForm';
 
-
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -13,12 +12,14 @@ const ProductDetail = () => {
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [addingToCart, setAddingToCart] = useState(false);
+  const [averageRating, setAverageRating] = useState(0);
+  const [reviewsCount, setReviewsCount] = useState(0);
 
-  // Récupérer l'utilisateur connecté
   const user = JSON.parse(localStorage.getItem('user') || 'null');
 
   useEffect(() => {
     fetchProduct();
+    fetchAverageRating();
   }, [id]);
 
   const fetchProduct = async () => {
@@ -34,34 +35,50 @@ const ProductDetail = () => {
     }
   };
 
-  const addToCart = async () => {
-  // Vérifier si l'utilisateur est connecté
-  if (!user) {
-    alert('Veuillez vous connecter pour ajouter au panier');
-    navigate('/login');
-    return;
-  }
-
-  setAddingToCart(true);
-  try {
-    const response = await fetch(`http://localhost:8080/api/cart/add?userId=${user.id}&productId=${product.id}&quantity=${quantity}`, {
-      method: 'POST',
-    });
-    
-    // Ne pas essayer de parser la réponse si ce n'est pas du JSON
-    if (response.ok) {
-      alert('✅ Produit ajouté au panier !');
-      navigate('/cart');
-    } else {
-      alert('Erreur lors de l\'ajout au panier');
+  const fetchAverageRating = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/reviews/product/${id}`);
+      if (response.ok) {
+        const reviews = await response.json();
+        setReviewsCount(reviews.length);
+        if (reviews.length > 0) {
+          const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
+          const avg = sum / reviews.length;
+          setAverageRating(avg);
+        }
+      }
+    } catch (error) {
+      console.error('Erreur chargement note moyenne:', error);
     }
-  } catch (error) {
-    console.error('Erreur:', error);
-    alert('Erreur lors de l\'ajout au panier');
-  } finally {
-    setAddingToCart(false);
-  }
-};
+  };
+
+  const addToCart = async () => {
+    if (!user) {
+      alert('Veuillez vous connecter pour ajouter au panier');
+      navigate('/login');
+      return;
+    }
+
+    setAddingToCart(true);
+    try {
+      const response = await fetch(`http://localhost:8080/api/cart/add?userId=${user.id}&productId=${product.id}&quantity=${quantity}`, {
+        method: 'POST',
+      });
+      
+      if (response.ok) {
+        alert('✅ Produit ajouté au panier !');
+        navigate('/cart');
+      } else {
+        alert('Erreur lors de l\'ajout au panier');
+      }
+    } catch (error) {
+      console.error('Erreur:', error);
+      alert('Erreur lors de l\'ajout au panier');
+    } finally {
+      setAddingToCart(false);
+    }
+  };
+
   if (loading) {
     return <div className="product-detail-loading">⏳ Chargement du produit...</div>;
   }
@@ -90,6 +107,26 @@ const ProductDetail = () => {
           <div className="product-detail-description" dangerouslySetInnerHTML={{ __html: product.description }}></div>
           <div className="product-detail-price">{product.price} DH</div>
           
+          {/* Note moyenne */}
+          <div className="product-detail-rating">
+            <div className="product-rating-stars">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <span 
+                  key={star} 
+                  className={`rating-star ${star <= Math.round(averageRating) ? 'filled' : 'empty'}`}
+                >
+                  ★
+                </span>
+              ))}
+            </div>
+            <span className="product-rating-average">
+              {averageRating.toFixed(1)} / 5
+            </span>
+            <span className="product-rating-count">
+              ({reviewsCount} avis)
+            </span>
+          </div>
+
           <div className="product-detail-quantity">
             <label>Quantité :</label>
             <input
@@ -110,12 +147,9 @@ const ProductDetail = () => {
           </button>
 
           <div className="product-detail-reviews">
-  <ReviewList productId={id} />
-  <ReviewForm productId={id} onReviewAdded={() => window.location.reload()} />
-</div>
-          
-
-          
+            <ReviewList productId={id} />
+            <ReviewForm productId={id} onReviewAdded={() => window.location.reload()} />
+          </div>
         </div>
       </div>
     </div>

@@ -131,3 +131,84 @@
     font-size: 1.5rem;
   }
 }
+
+
+/* ProductDetail.css - Version complète */
+
+.product-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* ... (tes styles existants) ... */
+
+.product-detail-add-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===========================
+   NOTE MOYENNE - AJOUTER ICI
+   =========================== */
+
+.product-detail-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.product-rating-stars {
+  display: flex;
+  gap: 0.1rem;
+}
+
+.rating-star {
+  font-size: 1.2rem;
+}
+
+.rating-star.filled {
+  color: #ffc107;
+}
+
+.rating-star.empty {
+  color: #ddd;
+}
+
+.product-rating-average {
+  font-weight: 600;
+  color: #333;
+  font-size: 1rem;
+}
+
+.product-rating-count {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+@media (max-width: 768px) {
+  .product-detail-container {
+    padding: 1rem;
+  }
+  
+  .product-detail-content {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .product-detail-title {
+    font-size: 1.5rem;
+  }
+  
+  .product-detail-price {
+    font-size: 1.5rem;
+  }
+  
+  .product-detail-rating {
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+}
+

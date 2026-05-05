@@ -8,6 +8,11 @@ import CategoryProducts from './features/catalog/pages/CategoryProducts';
 import Cart from './features/cart/pages/Cart';
 import Orders from './features/orders/pages/Orders';
 import AdminProducts from './features/admin/pages/AdminProducts';
+import Profile from './features/profile/pages/Profile';
+import AdminOrders from './features/admin/pages/AdminOrders';
+
+
+
 
 
 
@@ -27,6 +32,8 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/admin" element={<AdminProducts />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/admin/orders" element={<AdminOrders />} />
           </Routes>
         </main>
         <Footer />
